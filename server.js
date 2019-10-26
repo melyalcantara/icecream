@@ -8,5 +8,12 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('connected to database'))
 
+app.use(express.json())
+
+//configurando el get y el post del usuario
+const userrouter = require('./routes/user')
+app.use('/user', userrouter)
+
+
 app.listen(3000,() => console.log('server started'));
 

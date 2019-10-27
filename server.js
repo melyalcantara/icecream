@@ -14,6 +14,9 @@ app.use(express.json())
 const userrouter = require('./routes/user')
 app.use('/user', userrouter)
 
+//configurando el get y el post de la lista
+const listaordenrouter = require('./routes/listas')
+app.use('/listaorden', listaordenrouter)
 
 app.listen(3000,() => console.log('server started'));
 

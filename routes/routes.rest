@@ -1,8 +1,8 @@
-POST http://localhost:3000/orden
+POST http://localhost:3000/user/login
 Content-Type: application/json
 
 {
-  "Guid": "5db4f26db027141b68e0266f",
-  "Pack": "5db4e5dd2b096e1f18e94c2f",
-  "Descripcion": "Malteada de chocolate grande"
-  }
+  "name": "michelle",
+  "email": "gerard@asdasd.com",
+  "password": "asdasd123"
+}

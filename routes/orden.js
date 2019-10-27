@@ -21,7 +21,8 @@ router.get('/:id', getOrden,(req, res) => {
 
 
 // Create one orden
-router.post('/', async (req, res) => {
+router.post('/:id', getPack ,async (req, res) => {
+  if(res.listaorden.expirationDate <= Date.now()){
     const orden = new Orden({
       Guid: req.body.Guid,
       Descripcion: req.body.Descripcion,
@@ -31,10 +32,15 @@ router.post('/', async (req, res) => {
     try {
     
       const neworden = await orden.save()
+      res.listaorden.orden.push(neworden._id)
       res.status(201).json(neworden)
     } catch (err) {
       res.status(400).json({ message: err.message })
     }
+  }
+  else{
+    res.send("La duracion ha expirado")
+  }
   })
 
   async function getOrden(req, res, next) {
@@ -46,11 +52,24 @@ router.post('/', async (req, res) => {
     } catch(err){
       return res.status(500).json({ message: err.message })
     }
-  
+   
     res.orden = orden
     next()
   }
   
+  async function getPack(req, res, next) {
+    try {
+      listaorden = await Pack.findById(req.params.id)
+      if (listaorden == null) {
+        return res.status(404).json({ message: 'No se ha podido encontrar la lista' + req.params.id})
+      }
+    } catch(err){
+      return res.status(500).json({ message: err.message })
+    }
+  
+    res.listaorden = listaorden
+    next()
+  }
 // Update one orden
 router.patch('/:id', getOrden, (req, res) => {
     

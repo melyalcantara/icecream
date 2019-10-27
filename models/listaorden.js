@@ -1,11 +1,18 @@
 const mongoose = require('mongoose')
 
 const packSchema = new mongoose.Schema({
+
+  nombre: {
+    type: String,
+    required: true
+  },
+
   creador: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
+
   Orden: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Orden',

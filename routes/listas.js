@@ -23,6 +23,7 @@ router.get('/:id', getPack,(req, res) => {
 router.post('/', async (req, res) => {
     const listaorden = new Pack({
       creador: req.body.creador,
+      nombre:req.body.nombre,
     })
     console.log(req.body)
     try {
@@ -53,7 +54,7 @@ router.patch('/:id', getPack, (req, res) => {
     
 })
 
-// Delete one list
+// Delete one list 
 router.delete('/:id', getPack, async (req, res) => {
     try {
         await res.listaorden.remove()

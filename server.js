@@ -18,5 +18,9 @@ app.use('/user', userrouter)
 const listaordenrouter = require('./routes/listas')
 app.use('/listaorden', listaordenrouter)
 
+//configurando el get y el post de la orden
+const ordenrouter = require('./routes/orden')
+app.use('/orden', ordenrouter)
+
 app.listen(3000,() => console.log('server started'));
 

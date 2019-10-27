@@ -50,9 +50,32 @@ router.post('/', async (req, res) => {
   }
   
 // Update one list
-router.patch('/:id', getPack, (req, res) => {
-    
-})
+//Solo se permite que el creador de la lista es el que la edite.
+  router.patch('/:id', getPack, async (req, res) => {
+    if(res.listaorden.creador == res.body.solicitante){
+    if (req.body.nombre != null) {
+      res.listaorden.nombre = req.body.nombre
+    }
+  
+    if (req.body.expirationDate != null) {
+      res.listaorden.expirationDate = req.body.expirationDate
+    }
+    if (req.body.orden != null) {
+      res.listaorden.orden = req.body.orden
+    }
+    try {
+      const updatedlist = await res.listaorden.save()
+      res.json(updatedlist)
+    } catch {
+      res.status(400).json({ message: err.message })
+    }
+  }
+  else{
+    res.send("No tienes permiso para editar la lista")
+  }
+  
+  })
+
 
 // Delete one list 
 router.delete('/:id', getPack, async (req, res) => {

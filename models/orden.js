@@ -5,7 +5,14 @@ const ordenSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
+  Size: {
+    type: String,
+    
+  },
+  Sabor: {
+    type: String,
+    required: true
+  },
   Guid: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

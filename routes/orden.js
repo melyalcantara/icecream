@@ -21,16 +21,19 @@ router.get('/:id', getOrden,(req, res) => {
 
 
 // Create one orden
-router.post('/:id', getPack ,async (req, res) => {
+router.post('/', getLista ,async (req, res) => {
+  console.log(res.listaorden.expirationDate)
   if(res.listaorden.expirationDate <= Date.now()){
     const orden = new Orden({
       Guid: req.body.Guid,
       Descripcion: req.body.Descripcion,
+      Size: req.body.Size,
+      Sabor: req.body.Sabor,
       Pack: req.body.Pack
     })
-    console.log(req.body)
-    try {
     
+    try {
+      console.log(orden)
       const neworden = await orden.save()
       res.listaorden.orden.push(neworden._id)
       res.status(201).json(neworden)
@@ -57,16 +60,16 @@ router.post('/:id', getPack ,async (req, res) => {
     next()
   }
   
-  async function getPack(req, res, next) {
+  async function getLista(req, res, next) {
     try {
-      listaorden = await Pack.findById(req.params.id)
+      listaorden = await Pack.findById(req.body.Pack)
       if (listaorden == null) {
-        return res.status(404).json({ message: 'No se ha podido encontrar la lista' + req.params.id})
+        return res.status(404).json({ message: 'No se ha podido encontrar la lista'})
       }
     } catch(err){
       return res.status(500).json({ message: err.message })
     }
-  
+    console.log(listaorden)
     res.listaorden = listaorden
     next()
   }

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Pack = require('../models/orden')
+const Pack = require('../models/listaorden')
 const Orden = require('../models/orden')
 
 // Get all orders
@@ -23,7 +23,7 @@ router.get('/:id', getOrden,(req, res) => {
 // Create one orden
 router.post('/', getLista ,async (req, res) => {
   console.log(res.listaorden.expirationDate)
-  if(res.listaorden.expirationDate <= Date.now()){
+  if(res.listaorden.expirationDate > new Date()){
     const orden = new Orden({
       Guid: req.body.Guid,
       Descripcion: req.body.Descripcion,
@@ -35,7 +35,8 @@ router.post('/', getLista ,async (req, res) => {
     try {
       console.log(orden)
       const neworden = await orden.save()
-      res.listaorden.orden.push(neworden._id)
+      res.listaorden.Orden.push(neworden._id)
+      const addtoarray = await res.listaorden.save()
       res.status(201).json(neworden)
     } catch (err) {
       res.status(400).json({ message: err.message })

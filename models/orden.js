@@ -43,7 +43,10 @@ const ordenSchema = new mongoose.Schema({
 
   }
 })
-// Un solo usuario solo puede tener una lista
+/**
+ * Un solo usuario solo puede tener una orden
+ */
+
 ordenSchema.index({
     Guid: 1,
     Pack: 1,

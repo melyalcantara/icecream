@@ -1,11 +1,15 @@
 const mongoose = require('mongoose')
 
+/**
+ * modelos Schema de mogoose 
+ */
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
+  
   email: {
     type: String,
     required: true,
@@ -20,8 +24,10 @@ const userSchema = new mongoose.Schema({
 
   }
 })
+/**
+ *  Un solo usuario solo puede tener una lista
+ */
 
-// Un solo usuario solo puede tener una lista
 userSchema.index({
   email: 1,
   status: 1,

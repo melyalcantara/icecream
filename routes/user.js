@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+/**
+ * Route para tener todos los usuarios
+ */
 
-// Get all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find()
@@ -11,13 +13,18 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message })
       }
 })
+/**
+ * Route para tener un solo usuario
+ */
 
-// Get one user
 router.get('/:id', getUser,(req, res) => {
     res.json(res.user)
 })
 
-// Post one user
+/**
+ * Route para Post un usuario
+ */
+
 router.post('/login', async (req, res) => {
     try {
         const users = await User.find({"name": req.body.name, "password": req.body.password}).select("_id")
@@ -28,7 +35,10 @@ router.post('/login', async (req, res) => {
       }
 })
 
-// Create one user
+/**
+ * Router para crear un usuario
+ */
+
 router.post('/', async (req, res) => {
     const user = new User({
       name: req.body.name,
@@ -44,7 +54,12 @@ router.post('/', async (req, res) => {
       res.status(400).json({ message: err.message })
     }
   })
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
   async function getUser(req, res, next) {
     try {
       user = await User.findById(req.params.id)
@@ -59,12 +74,18 @@ router.post('/', async (req, res) => {
     next()
   }
   
-// Update one user
+  /**
+   * route para actualizar un usuario
+   */
+
 router.patch('/:id', getUser, (req, res) => {
     
 })
 
-// Delete one user
+/**
+ * route para eliminar un usuario
+ */
+
 router.delete('/:id', getUser, async (req, res) => {
     try {
         await res.user.remove()

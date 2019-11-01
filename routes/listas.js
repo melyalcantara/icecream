@@ -3,7 +3,7 @@ const router = express.Router()
 const Pack = require('../models/listaorden')
 
 /**
- * Get todas las listas
+ * leer todas las listas
  */
 
 router.get('/', async (req, res) => {
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 /**
- * Get una lista
+ * leer una lista
  */
 router.get('/:id', getPack,(req, res) => {
     res.json(res.listaorden)

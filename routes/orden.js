@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const Pack = require('../models/listaorden')
 const Orden = require('../models/orden')
+/**
+ * leer todas las ordenes
+ */
 
-// Get all orders
 router.get('/', async (req, res) => {
     try {
         const orden = await Orden.find()
@@ -12,15 +14,19 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message })
       }
 })
+/**
+ * leer una orden
+ */
 
-// Get one orden
 router.get('/:id', getOrden,(req, res) => {
     res.json(res.orden)
 })
 
 
+/**
+ * Crear una orden
+ */
 
-// Create one orden
 router.post('/', getLista ,async (req, res) => {
   console.log(res.listaorden.expirationDate)
   if(res.listaorden.expirationDate > new Date()){
@@ -60,7 +66,12 @@ router.post('/', getLista ,async (req, res) => {
     res.orden = orden
     next()
   }
-  
+  /**
+   * 
+   *  @param {*} req Es la solicitud
+   * @param {*} res respuesta que va enviar al servidor
+   * @param {*} next Le dice a la funcion de ejecuccion que se mueva a la otra seccion del codigo.
+   */
   async function getLista(req, res, next) {
     try {
       listaorden = await Pack.findById(req.body.Pack)
@@ -74,12 +85,17 @@ router.post('/', getLista ,async (req, res) => {
     res.listaorden = listaorden
     next()
   }
-// Update one orden
+  /**
+   * Actualizar una orden
+   */
+
 router.patch('/:id', getOrden, (req, res) => {
     
 })
+/**
+ * Eliminar una orde
+ */
 
-// Delete one orden
 router.delete('/:id', getOrden, async (req, res) => {
     try {
         await res.orden.remove()

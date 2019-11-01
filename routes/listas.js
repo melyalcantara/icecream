@@ -2,24 +2,31 @@ const express = require('express')
 const router = express.Router()
 const Pack = require('../models/listaorden')
 
-// Get all lists
+/**
+ * Get todas las listas
+ */
+
 router.get('/', async (req, res) => {
     try {
         const listaorden = await Pack.find()
         res.json(listaorden)
       } catch (err) {
+       
         res.status(500).json({ message: err.message })
       }
 })
 
-// Get one list
+/**
+ * Get una lista
+ */
 router.get('/:id', getPack,(req, res) => {
     res.json(res.listaorden)
 })
 
+/**
+ * Crear una lista
+ */
 
-
-// Create one list
 router.post('/', async (req, res) => {
     const listaorden = new Pack({
       creador: req.body.creador,
@@ -35,6 +42,13 @@ router.post('/', async (req, res) => {
     }
   })
 
+  /**
+   * 
+   * @param {*} req Es la solicitud
+   * @param {*} res respuesta que va enviar al servidor
+   * @param {*} next Le dice a la funcion de ejecuccion que se mueva a la otra seccion del codigo.
+   */
+
   async function getPack(req, res, next) {
     try {
       listaorden = await Pack.findById(req.params.id)
@@ -49,13 +63,17 @@ router.post('/', async (req, res) => {
     next()
   }
   
-// Update one list
-//Solo se permite que el creador de la lista es el que la edite.
+  /**
+   * Actualizar una lista
+   * Solo se permite que el creador de la lista es el que la edite
+   */
+
   router.patch('/:id', getPack, async (req, res) => {
     if(res.listaorden.creador == res.body.solicitante){
     if (req.body.nombre != null) {
       res.listaorden.nombre = req.body.nombre
     }
+   
   
     if (req.body.expirationDate != null) {
       res.listaorden.expirationDate = req.body.expirationDate
@@ -63,6 +81,7 @@ router.post('/', async (req, res) => {
     if (req.body.orden != null) {
       res.listaorden.orden = req.body.orden
     }
+   
     try {
       const updatedlist = await res.listaorden.save()
       res.json(updatedlist)
@@ -77,7 +96,9 @@ router.post('/', async (req, res) => {
   })
 
 
-// Delete one list 
+/** 
+ * eliminar una lista 
+ */
 router.delete('/:id', getPack, async (req, res) => {
     try {
         await res.listaorden.remove()

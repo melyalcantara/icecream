@@ -56,9 +56,9 @@ router.post('/', async (req, res) => {
   })
 /**
  * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req Es la solicitud
+ * @param {*} res respuesta que va enviar al servidor
+ * @param {*} next Le dice a la funcion de ejecuccion que se mueva a la otra seccion del codigo.
  */
   async function getUser(req, res, next) {
     try {

@@ -29,7 +29,10 @@ const packSchema = new mongoose.Schema({
 
   }
 })
-// Un solo usuario solo puede tener una lista
+/**
+ * Un solo usuario solo puede tener una lista
+ */
+
 packSchema.index({
     _id: 1,
     creador: 1,
